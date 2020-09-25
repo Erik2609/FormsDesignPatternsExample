@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BasicFormsApplication.UserContextProvider
 {
-    public interface IUserContexProvider
+    public interface IUserContextProvider
     {
         User GetCurrentAuthenticatedUser();
     }

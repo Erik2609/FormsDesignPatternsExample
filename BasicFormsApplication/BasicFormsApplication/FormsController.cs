@@ -12,15 +12,15 @@ namespace BasicFormsApplication
     public class FormsController
     {
         private readonly IFormRepository _formRepository;
-        private readonly IUserContexProvider _userContexProvider;
+        private readonly IUserContextProvider _userContextProvider;
         private readonly IAddressProvider _addressProvider;
 
         public FormsController(IFormRepository formRepository,
-            IUserContexProvider userContexProvider,
+            IUserContextProvider userContextProvider,
             IAddressProvider addressProvider)
         {
             _formRepository = formRepository;
-            _userContexProvider = userContexProvider;
+            _userContextProvider = userContextProvider;
             _addressProvider = addressProvider;
         }
 
@@ -28,7 +28,7 @@ namespace BasicFormsApplication
         {
             var preFillDictionary = new Dictionary<string, object>();
             var form = _formRepository.GetFormDefinition(formName);
-            var user = _userContexProvider.GetCurrentAuthenticatedUser();
+            var user = _userContextProvider.GetCurrentAuthenticatedUser();
 
             if (form.FormName == AddressForm.FORM_NAME)
             {
@@ -52,7 +52,7 @@ namespace BasicFormsApplication
 
         public bool SubmitForm(IForm form)
         {
-            var user = _userContexProvider.GetCurrentAuthenticatedUser();
+            var user = _userContextProvider.GetCurrentAuthenticatedUser();
             if (form.FormName == AddressForm.FORM_NAME)
             {
                 var (province, street) = _addressProvider.GetProvinceAndStreet(form.SubmittedValues[nameof(AddressForm.PostalCode)]?.ToString(),
