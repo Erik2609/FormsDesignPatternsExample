@@ -8,6 +8,8 @@ namespace BasicFormsApplication.Models.Forms
 {
     public interface IForm
     {
-        string FormName { get; set; }
+        string FormName { get; }
+
+        Dictionary<string, object> SubmittedValues { get; }
     }
 }

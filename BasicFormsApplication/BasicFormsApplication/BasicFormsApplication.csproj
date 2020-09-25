@@ -42,9 +42,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FormsController.cs" />
+    <Compile Include="Models\Forms\AddressForm.cs" />
+    <Compile Include="Models\Forms\IAuditInformation.cs" />
     <Compile Include="Models\Forms\IForm.cs" />
-    <Compile Include="Repositories\FormRepository.cs" />
+    <Compile Include="Models\Forms\PersonalInformationForm.cs" />
+    <Compile Include="Models\User\User.cs" />
+    <Compile Include="Repositories\IAddressProvider.cs" />
+    <Compile Include="Repositories\IFormRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UserContextProvider\IUserContexProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Factory\" />

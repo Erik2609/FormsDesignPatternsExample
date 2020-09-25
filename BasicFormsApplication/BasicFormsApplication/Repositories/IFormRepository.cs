@@ -9,7 +9,7 @@ namespace BasicFormsApplication.Repositories
 {
     public interface IFormRepository
     {
-        IForm GetForm(string formName);
+        IForm GetFormDefinition(string formName);
         bool Submit(IForm form);
         
     }
