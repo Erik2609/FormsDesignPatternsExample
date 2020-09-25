@@ -8,7 +8,8 @@ namespace BasicFormsApplication.Models.Forms
 {
     public class PersonalInformationForm : IForm, IAuditInformation
     {
-        public string FormName { get; } = "Personal";
+        public const string FORM_NAME = "Personal";
+        public string FormName { get; } = FORM_NAME;
         public Dictionary<string, object> SubmittedValues { get; } = new Dictionary<string, object>()
         {
             { nameof(Name), null },

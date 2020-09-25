@@ -26,19 +26,73 @@ namespace BasicFormsApplication
 
         public Dictionary<string, object> GetPrefillData(string formName)
         {
-            var prefillObject = new Dictionary<string, object>();
+            var preFillDictionary = new Dictionary<string, object>();
             var form = _formRepository.GetFormDefinition(formName);
+            var user = _userContexProvider.GetCurrentAuthenticatedUser();
 
-            // TODO Assign Prefill values
+            if (form.FormName == AddressForm.FORM_NAME)
+            {
+                if (user != null)
+                {
+                    var (postalCode, houseNumber) = _addressProvider.GetPostalCodeAndHouseNumber(user.IpAddress);
+                    AddPrefillValueToDictionary(preFillDictionary, nameof(AddressForm.PostalCode), postalCode);
+                    AddPrefillValueToDictionary(preFillDictionary, nameof(AddressForm.HouseNumber), houseNumber);
+                }
+            }
+            else if(form.FormName == PersonalInformationForm.FORM_NAME)
+            {
+                if (user != null)
+                {
+                    AddPrefillValueToDictionary(preFillDictionary, nameof(PersonalInformationForm.Name), user.Name);
+                }
+            }
 
-            return prefillObject;
+            return preFillDictionary;
         }
 
         public bool SubmitForm(IForm form)
         {
-            // TODO Assign specific form values
+            var user = _userContexProvider.GetCurrentAuthenticatedUser();
+            if (form.FormName == AddressForm.FORM_NAME)
+            {
+                var (province, street) = _addressProvider.GetProvinceAndStreet(form.SubmittedValues[nameof(AddressForm.PostalCode)]?.ToString(),
+                    form.SubmittedValues[nameof(AddressForm.HouseNumber)]?.ToString());
+
+                form.SubmittedValues[nameof(AddressForm.Province)] = province;
+                form.SubmittedValues[nameof(AddressForm.Street)] = street;
+
+                if (user != null)
+                {
+                    form.SubmittedValues[nameof(IAuditInformation.AuthenticatedUserEmail)] = user.Email;
+                    form.SubmittedValues[nameof(IAuditInformation.AuthenticatedUserId)] = user.Id;
+                    form.SubmittedValues[nameof(IAuditInformation.AuthenticatedUserIpAddress)] = user.IpAddress;
+                    form.SubmittedValues[nameof(IAuditInformation.AuthenticatedUserName)] = user.Name;
+                }
+            }
+            else if (form.FormName == PersonalInformationForm.FORM_NAME)
+            {
+                if (user != null)
+                {
+                    form.SubmittedValues[nameof(IAuditInformation.AuthenticatedUserEmail)] = user.Email;
+                    form.SubmittedValues[nameof(IAuditInformation.AuthenticatedUserId)] = user.Id;
+                    form.SubmittedValues[nameof(IAuditInformation.AuthenticatedUserIpAddress)] = user.IpAddress;
+                    form.SubmittedValues[nameof(IAuditInformation.AuthenticatedUserName)] = user.Name;
+                }
+            }
 
             return _formRepository.Submit(form);
+        }
+
+        private void AddPrefillValueToDictionary(Dictionary<string, object> preFillDictionary, string key, string value)
+        {
+            if(preFillDictionary.ContainsKey(key))
+            {
+                preFillDictionary[key] = value;
+            }
+            else
+            {
+                preFillDictionary.Add(key, value);
+            }
         }
     }
 }
