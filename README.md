@@ -14,4 +14,4 @@ Vaak als in een strategy pattern inzet, combineer ik deze met een factory patter
 
 ### Vervolg
 We houden wel nog wat duplicate code over, beide strategies hebben nog steeds logica om de gebruiker context op te slaan bij het formulier.
-De laaste stap is terug te zien op de branch add-decorator-pattern
+De laaste stap is terug te zien op de branch add-decorator-pattern en https://github.com/Erik2609/FormsDesignPatternsExample/blob/add-decorator-pattern/README.md
