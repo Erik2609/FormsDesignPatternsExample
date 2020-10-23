@@ -43,15 +43,7 @@ namespace BasicFormsApplication.Strategies
 
             form.SubmittedValues[nameof(AddressForm.Province)] = province;
             form.SubmittedValues[nameof(AddressForm.Street)] = street;
-
-            var user = _userContextProvider.GetCurrentAuthenticatedUser();
-            if (user != null)
-            {
-                form.SubmittedValues[nameof(IAuditInformation.AuthenticatedUserEmail)] = user.Email;
-                form.SubmittedValues[nameof(IAuditInformation.AuthenticatedUserId)] = user.Id;
-                form.SubmittedValues[nameof(IAuditInformation.AuthenticatedUserIpAddress)] = user.IpAddress;
-                form.SubmittedValues[nameof(IAuditInformation.AuthenticatedUserName)] = user.Name;
-            }
+            
         }
     }
 }

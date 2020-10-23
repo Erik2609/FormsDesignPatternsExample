@@ -16,7 +16,7 @@ namespace BasicFormsApplication.Factory
             IUserContextProvider userContextProvider,
             IAddressProvider addressProvider)
         {
-            var strategy = new BaseFormStrategy();
+            IFormLogicStrategy strategy = new BaseFormStrategy();
             switch(form.FormName)
             {
                 case AddressForm.FORM_NAME:
@@ -29,6 +29,11 @@ namespace BasicFormsApplication.Factory
                     break;
             }
 
+            if(AuditFormLogicDecorator.IsFormAuditable(form))
+            {
+                strategy = new AuditFormLogicDecorator(strategy, userContextProvider);
+            }
+            
             return strategy;
         }
     }
