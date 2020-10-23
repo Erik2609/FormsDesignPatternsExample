@@ -7,7 +7,7 @@ Er is een generieke API om formulieren in te schieten en om de formulieren van p
 GetPrefillData en SubmitForm.
 
 Wat opvalt is dat er wat uitzondering formulieren bestaan, namelijk het adres formulier en het persoonlijke gegevens formulier.
-Deze bevatten beide extra logica om bij het ophalen van de pre-fill data en bij het opslaan.
+Deze bevatten beide extra logica bij het ophalen van de pre-fill data en bij het opslaan.
 
 ## Nieuwe wens
 
