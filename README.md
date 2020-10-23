@@ -12,6 +12,6 @@ Ook biedt het strategy pattern de mogelijkheid om logica te bouwen voor beide me
 ## Factory pattern
 Vaak als in een strategy pattern inzet, combineer ik deze met een factory pattern (https://en.wikipedia.org/wiki/Factory_method_pattern). De factory kan op basis van het formulier bepalen welke strategy nodig is en geeft de concrete implementatie terug aan de controller. Het voordeel is, de controller blijft simpel en de logica is makkelijk herbruikbaar door een nieuwe controller die bijvoorbeeld ook formulieren moet kunnen opslaan.
 
-### vervolg
+### Vervolg
 We houden wel nog wat duplicate code over, beide strategies hebben nog steeds logica om de gebruiker context op te slaan bij het formulier.
 De laaste stap is terug te zien op de branch add-decorator-pattern
