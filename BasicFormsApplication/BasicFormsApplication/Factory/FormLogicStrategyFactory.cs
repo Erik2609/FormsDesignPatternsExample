@@ -12,12 +12,12 @@ namespace BasicFormsApplication.Factory
 {
     public static class FormLogicStrategyFactory
     {
-        public static IFormLogicStrategy GetFormLogicStrategy(string formName,
+        public static IFormLogicStrategy GetFormLogicStrategy(IForm form,
             IUserContextProvider userContextProvider,
             IAddressProvider addressProvider)
         {
             var strategy = new BaseFormStrategy();
-            switch(formName)
+            switch(form.FormName)
             {
                 case AddressForm.FORM_NAME:
                     strategy = new AddressFormStrategy(userContextProvider, addressProvider);

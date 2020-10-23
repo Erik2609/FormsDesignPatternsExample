@@ -31,7 +31,7 @@ namespace BasicFormsApplication
             var preFillDictionary = new Dictionary<string, object>();
             var form = _formRepository.GetFormDefinition(formName);
 
-            var formLogicStrategy = GetFormLogicStrategy(form.FormName);
+            var formLogicStrategy = GetFormLogicStrategy(form);
             formLogicStrategy.AddPrefillData(preFillDictionary);
 
             return preFillDictionary;
@@ -39,15 +39,15 @@ namespace BasicFormsApplication
 
         public bool SubmitForm(IForm form)
         {
-            var formLogicStrategy = GetFormLogicStrategy(form.FormName);
+            var formLogicStrategy = GetFormLogicStrategy(form);
             formLogicStrategy.AddOnPostData(form);
 
             return _formRepository.Submit(form);
         }
 
-        public IFormLogicStrategy GetFormLogicStrategy(string formName)
+        public IFormLogicStrategy GetFormLogicStrategy(IForm form)
         {
-            return FormLogicStrategyFactory.GetFormLogicStrategy(formName, _userContextProvider, _addressProvider);
+            return FormLogicStrategyFactory.GetFormLogicStrategy(form, _userContextProvider, _addressProvider);
         }
 
     }
