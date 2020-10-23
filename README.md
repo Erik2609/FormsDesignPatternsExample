@@ -19,4 +19,4 @@ Ga na wat je zou refactoren voordat je aan de nieuwe wens zou beginnen.
 
 
 ### Benieuwd naar mijn oplossing?
-Bekijk https://github.com/Erik2609/FormsDesignPatternsExample/blob/add-strategy-pattern/README.md
+Bekijk de branch add-strategy-pattern en https://github.com/Erik2609/FormsDesignPatternsExample/blob/add-strategy-pattern/README.md
