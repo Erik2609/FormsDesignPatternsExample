@@ -39,33 +39,8 @@ namespace BasicFormsApplication
 
         public bool SubmitForm(IForm form)
         {
-            var user = _userContextProvider.GetCurrentAuthenticatedUser();
-            if (form.FormName == AddressForm.FORM_NAME)
-            {
-                var (province, street) = _addressProvider.GetProvinceAndStreet(form.SubmittedValues[nameof(AddressForm.PostalCode)]?.ToString(),
-                    form.SubmittedValues[nameof(AddressForm.HouseNumber)]?.ToString());
-
-                form.SubmittedValues[nameof(AddressForm.Province)] = province;
-                form.SubmittedValues[nameof(AddressForm.Street)] = street;
-
-                if (user != null)
-                {
-                    form.SubmittedValues[nameof(IAuditInformation.AuthenticatedUserEmail)] = user.Email;
-                    form.SubmittedValues[nameof(IAuditInformation.AuthenticatedUserId)] = user.Id;
-                    form.SubmittedValues[nameof(IAuditInformation.AuthenticatedUserIpAddress)] = user.IpAddress;
-                    form.SubmittedValues[nameof(IAuditInformation.AuthenticatedUserName)] = user.Name;
-                }
-            }
-            else if (form.FormName == PersonalInformationForm.FORM_NAME)
-            {
-                if (user != null)
-                {
-                    form.SubmittedValues[nameof(IAuditInformation.AuthenticatedUserEmail)] = user.Email;
-                    form.SubmittedValues[nameof(IAuditInformation.AuthenticatedUserId)] = user.Id;
-                    form.SubmittedValues[nameof(IAuditInformation.AuthenticatedUserIpAddress)] = user.IpAddress;
-                    form.SubmittedValues[nameof(IAuditInformation.AuthenticatedUserName)] = user.Name;
-                }
-            }
+            var formLogicStrategy = GetFormLogicStrategy(form.FormName);
+            formLogicStrategy.AddOnPostData(form);
 
             return _formRepository.Submit(form);
         }

@@ -26,5 +26,19 @@ namespace BasicFormsApplication.Strategies
                 AddPrefillValueToDictionary(preFillDictionary, nameof(PersonalInformationForm.Name), user.Name);
             }
         }
+
+        public override void AddOnPostData(IForm form)
+        {
+            base.AddOnPostData(form);
+
+            var user = _userContextProvider.GetCurrentAuthenticatedUser();
+            if (user != null)
+            {
+                form.SubmittedValues[nameof(IAuditInformation.AuthenticatedUserEmail)] = user.Email;
+                form.SubmittedValues[nameof(IAuditInformation.AuthenticatedUserId)] = user.Id;
+                form.SubmittedValues[nameof(IAuditInformation.AuthenticatedUserIpAddress)] = user.IpAddress;
+                form.SubmittedValues[nameof(IAuditInformation.AuthenticatedUserName)] = user.Name;
+            }
+        }
     }
 }
