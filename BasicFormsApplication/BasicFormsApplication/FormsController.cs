@@ -1,5 +1,7 @@
-﻿using BasicFormsApplication.Models.Forms;
+﻿using BasicFormsApplication.Factory;
+using BasicFormsApplication.Models.Forms;
 using BasicFormsApplication.Repositories;
+using BasicFormsApplication.Strategies;
 using BasicFormsApplication.UserContextProvider;
 using System;
 using System.Collections.Generic;
@@ -28,24 +30,9 @@ namespace BasicFormsApplication
         {
             var preFillDictionary = new Dictionary<string, object>();
             var form = _formRepository.GetFormDefinition(formName);
-            var user = _userContextProvider.GetCurrentAuthenticatedUser();
 
-            if (form.FormName == AddressForm.FORM_NAME)
-            {
-                if (user != null)
-                {
-                    var (postalCode, houseNumber) = _addressProvider.GetPostalCodeAndHouseNumber(user.IpAddress);
-                    AddPrefillValueToDictionary(preFillDictionary, nameof(AddressForm.PostalCode), postalCode);
-                    AddPrefillValueToDictionary(preFillDictionary, nameof(AddressForm.HouseNumber), houseNumber);
-                }
-            }
-            else if(form.FormName == PersonalInformationForm.FORM_NAME)
-            {
-                if (user != null)
-                {
-                    AddPrefillValueToDictionary(preFillDictionary, nameof(PersonalInformationForm.Name), user.Name);
-                }
-            }
+            var formLogicStrategy = GetFormLogicStrategy(form.FormName);
+            formLogicStrategy.AddPrefillData(preFillDictionary);
 
             return preFillDictionary;
         }
@@ -83,16 +70,10 @@ namespace BasicFormsApplication
             return _formRepository.Submit(form);
         }
 
-        private void AddPrefillValueToDictionary(Dictionary<string, object> preFillDictionary, string key, string value)
+        public IFormLogicStrategy GetFormLogicStrategy(string formName)
         {
-            if(preFillDictionary.ContainsKey(key))
-            {
-                preFillDictionary[key] = value;
-            }
-            else
-            {
-                preFillDictionary.Add(key, value);
-            }
+            return FormLogicStrategyFactory.GetFormLogicStrategy(formName, _userContextProvider, _addressProvider);
         }
+
     }
 }

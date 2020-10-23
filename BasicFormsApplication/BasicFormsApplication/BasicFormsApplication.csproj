@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Factory\FormLogicStrategyFactory.cs" />
     <Compile Include="FormsController.cs" />
     <Compile Include="Models\Forms\AddressForm.cs" />
     <Compile Include="Models\Forms\IAuditInformation.cs" />
@@ -50,11 +51,12 @@
     <Compile Include="Repositories\IAddressProvider.cs" />
     <Compile Include="Repositories\IFormRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Strategies\AddressFormStrategy.cs" />
+    <Compile Include="Strategies\BaseFormStrategy.cs" />
+    <Compile Include="Strategies\IFormLogicStrategy.cs" />
+    <Compile Include="Strategies\PersonalFormInformationStrategy.cs" />
     <Compile Include="UserContextProvider\IUserContextProvider.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Factory\" />
-    <Folder Include="Strategies\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
